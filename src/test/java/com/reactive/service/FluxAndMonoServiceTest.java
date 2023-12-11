@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestComponent;
 
+import reactor.core.publisher.Hooks;
 import reactor.test.StepVerifier;
+import reactor.tools.agent.ReactorDebugAgent;
 
 class FluxAndMonoServiceTest {
 
@@ -199,6 +201,9 @@ class FluxAndMonoServiceTest {
 	
 	@Test
 	void testFruitsFluxOnErrorMap() {
+//Hooks.onOperatorDebug();
+		ReactorDebugAgent.init();
+		ReactorDebugAgent.processExistingClasses();
 		var fruitsFluxOnErrorMap = fluxAndMonoService.fruitsFluxOnErrorMap();
 		StepVerifier.create(fruitsFluxOnErrorMap)
 		.expectNext("APPLE")
